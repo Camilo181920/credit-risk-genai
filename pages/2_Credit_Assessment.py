@@ -20,6 +20,7 @@ if st.button("Evaluate Customer"):
         customer
     )
 
+    st.session_state["assessment"] = assessment
 
     st.session_state[
         "credit_assessment"

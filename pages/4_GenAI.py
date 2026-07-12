@@ -1,68 +1,65 @@
 import streamlit as st
 
-from src.services import GenAIService
+from src.services.genai_service import GenAIService
 
 
-st.title("🤖 GenAI Assistant")
+st.title("🤖 GenAI Credit Analyst")
 
 
-if (
-    "credit_assessment"
-    not in st.session_state
-):
+if "assessment" not in st.session_state:
 
     st.warning(
-        "Primero evalúe un cliente "
-        "en Credit Assessment."
+        "Primero debe evaluar un cliente en Credit Assessment."
     )
 
-    st.stop()
+else:
+
+    assessment = st.session_state["assessment"]
 
 
-
-assessment = st.session_state[
-    "credit_assessment"
-]
-
-
-st.subheader(
-    "Credit Assessment Summary"
-)
+    st.subheader(
+        "Credit Assessment Summary"
+    )
 
 
-st.write(
-    f"Risk Level: {assessment.risk_level}"
-)
+    col1, col2 = st.columns(2)
 
 
-st.write(
-    f"Default Probability: "
-    f"{assessment.probability:.2%}"
-)
+    col1.metric(
+        "Probability",
+        f"{assessment.probability:.2%}"
+    )
 
 
-st.subheader(
-    "Generating Executive Report"
-)
+    col2.metric(
+        "Risk",
+        assessment.risk_level
+    )
 
 
-if st.button(
-    "Generate AI Report"
-):
-
-    service = GenAIService()
+    st.divider()
 
 
-    report = (
-        service
-        .generate_credit_report(
-            assessment
+    if st.button(
+        "Generate Executive Report"
+    ):
+
+        service = GenAIService()
+
+
+        report = (
+            service
+            .generate_credit_report(
+                assessment
+            )
         )
-    )
 
 
-    st.text_area(
-        "Generated Report",
-        report,
-        height=300
-    )
+        st.subheader(
+            "Executive Credit Report"
+        )
+
+
+        st.write(
+            report
+        )
