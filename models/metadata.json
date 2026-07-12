@@ -4,6 +4,6 @@
     "dataset": "German Credit Dataset",
     "target": "credit_risk",
     "version": "1.0.0",
-    "trained_at": "2026-07-12T07:40:49.670747",
+    "trained_at": "2026-07-12T10:52:06.351743",
     "roc_auc": 0.7571428571428571
 }

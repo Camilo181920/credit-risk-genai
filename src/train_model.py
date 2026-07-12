@@ -1,12 +1,17 @@
-from pathlib import Path
 import json
 from datetime import datetime
 
 import joblib
 
-from sklearn.model_selection import train_test_split
+from src.config.settings import MODEL_DIR
 
 from src.data.loader import load_data
+
+from src.modeling.data import (
+    split_features_target,
+    split_train_test,
+    identify_columns,
+)
 
 from src.modeling.model_factory import (
     create_xgboost,
@@ -24,54 +29,8 @@ from src.modeling.model_registry import (
     save_pipeline,
 )
 
-from src.config.settings import (
-    MODEL_DIR,
-)
-
 
 TARGET = "credit_risk"
-
-
-def prepare_data(df):
-
-    X = df.drop(
-        columns=[TARGET]
-    )
-
-    y = df[TARGET]
-
-    return X, y
-
-
-
-def identify_columns(X):
-
-    numeric_features = (
-        X.select_dtypes(
-            include=[
-                "int64",
-                "float64",
-            ]
-        )
-        .columns
-        .tolist()
-    )
-
-    categorical_features = (
-        X.select_dtypes(
-            include=[
-                "object",
-            ]
-        )
-        .columns
-        .tolist()
-    )
-
-    return (
-        numeric_features,
-        categorical_features,
-    )
-
 
 
 def train():
@@ -84,37 +43,26 @@ def train():
         "german_credit.csv"
     )
 
-
-    X, y = prepare_data(
+    X, y = split_features_target(
         df
     )
-
 
     numeric_features, categorical_features = (
         identify_columns(X)
     )
 
-
     X_train, X_test, y_train, y_test = (
-        train_test_split(
+        split_train_test(
             X,
             y,
-            test_size=0.20,
-            random_state=42,
-            stratify=y,
         )
     )
 
-
-    model = create_xgboost()
-
-
     trainer = ModelTrainer(
-        model,
-        numeric_features,
-        categorical_features,
+        model=create_xgboost(),
+        numeric_features=numeric_features,
+        categorical_features=categorical_features,
     )
-
 
     print(
         "Training model..."
@@ -124,7 +72,6 @@ def train():
         X_train,
         y_train,
     )
-
 
     print(
         "Evaluating..."
@@ -138,9 +85,7 @@ def train():
         y_test,
     )
 
-
     print(metrics)
-
 
     print(
         "Saving model..."
@@ -150,12 +95,10 @@ def train():
         pipeline
     )
 
-
     joblib.dump(
         X.columns.tolist(),
         MODEL_DIR / "feature_names.joblib",
     )
-
 
     metadata = {
 
@@ -181,9 +124,7 @@ def train():
             float(
                 metrics["roc_auc"]
             ),
-
     }
-
 
     with open(
         MODEL_DIR / "metadata.json",
@@ -196,11 +137,9 @@ def train():
             indent=4,
         )
 
-
     print(
         "Training completed."
     )
-
 
 
 if __name__ == "__main__":
