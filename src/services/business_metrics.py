@@ -11,6 +11,7 @@ def default_rate(
     return df["credit_risk"].mean()
 
 
+
 def average_loan(
     df: pd.DataFrame,
 ) -> float:
@@ -18,7 +19,8 @@ def average_loan(
     Calcula el monto promedio de crédito.
     """
 
-    return df["loan_amount"].mean()
+    return df["amount"].mean()
+
 
 
 def average_age(
@@ -28,25 +30,30 @@ def average_age(
     Calcula la edad promedio del cliente.
     """
 
-    return df["customer_age"].mean()
+    return df["age"].mean()
+
 
 
 def business_summary(
     df: pd.DataFrame,
 ) -> pd.Series:
     """
-    Genera indicadores principales del negocio.
+    Genera indicadores principales del portafolio.
     """
 
     summary = {
 
-        "Clientes": len(df),
+        "Clientes":
+            len(df),
 
-        "Monto Promedio": average_loan(df),
+        "Monto Promedio":
+            average_loan(df),
 
-        "Edad Promedio": average_age(df),
+        "Edad Promedio":
+            average_age(df),
 
-        "Tasa Default": default_rate(df),
+        "Tasa Default":
+            default_rate(df),
 
     }
 
