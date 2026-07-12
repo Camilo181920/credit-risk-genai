@@ -52,12 +52,19 @@ class CreditService:
             )
         )
 
+        shap_explanation = (
+            explanation
+            .to_dict(
+                orient="records"
+            )
+        )
 
         assessment = (
             self.inference
             .predict(
                 customer,
                 top_features,
+                shap_explanation,
             )
         )
 

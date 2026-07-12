@@ -6,9 +6,9 @@ class CreditAssessment:
     """
     Resultado de evaluación crediticia.
 
-    Representa la salida del modelo
-    y la información utilizada por
-    el asistente GenAI.
+    Contiene la predicción del modelo,
+    los factores principales de riesgo
+    y la explicación SHAP.
     """
 
     probability: float
@@ -18,5 +18,9 @@ class CreditAssessment:
     prediction: int
 
     top_features: list[str] = field(
+        default_factory=list
+    )
+
+    explanation: list[dict] = field(
         default_factory=list
     )

@@ -21,6 +21,9 @@ FEATURE_EXPLANATIONS = {
     "age":
         "Edad del cliente",
 
+    "employment_duration":
+        "Antigüedad laboral",
+
     "employment":
         "Antigüedad laboral",
 
@@ -36,8 +39,30 @@ FEATURE_EXPLANATIONS = {
     "property":
         "Nivel de patrimonio",
 
-}
+    "personal_status_sex":
+        "Perfil personal del cliente",
 
+    "other_debtors":
+        "Existencia de otros deudores",
+
+    "present_residence":
+        "Tiempo de residencia",
+
+    "job":
+        "Tipo de ocupación",
+
+    "people_liable":
+        "Personas a cargo",
+
+    "telephone":
+        "Disponibilidad telefónica",
+
+    "foreign_worker":
+        "Condición laboral extranjera",
+
+    "purpose":
+        "Propósito del crédito",
+}
 
 
 def explain_feature(

@@ -60,6 +60,6 @@ else:
         )
 
 
-        st.write(
+        st.markdown(
             report
         )

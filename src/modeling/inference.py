@@ -24,6 +24,7 @@ class CreditInference:
         self,
         customer,
         top_features=None,
+        explanation=None,
     ) -> CreditAssessment:
         """
         Predicción individual.
@@ -60,6 +61,12 @@ class CreditInference:
             top_features=(
                 top_features
                 if top_features
+                else []
+            ),
+
+            explanation=(
+                explanation
+                if explanation
                 else []
             ),
         )
